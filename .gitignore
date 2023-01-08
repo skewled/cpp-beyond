@@ -1,0 +1,12 @@
+build-vscode
+.vscode
+.vs
+.out
+out/
+.release
+netlib/CMakeFiles
+netlib/CMakeCache.txt
+.DS_Store
+[Bb][Uu][Ii][Ll][Dd]/
+[Tt]esting/
+googletest
