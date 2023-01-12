@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <gtest/gtest.h>
 #include <app/Rectangle.h>
 
@@ -42,5 +43,9 @@ TEST_F(RectangleTest, Area)
 }
 TEST_F(RectangleTest, Perimeter)
 {
-  ASSERT_DOUBLE_EQ(50, r1.Perimeter());
+  ASSERT_DOUBLE_EQ(30, r1.Perimeter());
+}
+TEST_F(RectangleTest, SizeError)
+{
+  ASSERT_THROW(r1.SetDimension(-1, -1), std::invalid_argument);
 }

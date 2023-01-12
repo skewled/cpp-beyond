@@ -1,47 +1,82 @@
 #pragma once
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <stdexcept>
 #include <string>
+#include <iostream>
 #include <app/RgbColor.h>
-#include <app/NotImplException.h>
+#include <app/Shape.h>
 
 namespace training::geometry
 {
-	class Circle
+	class Circle : public Shape
 	{
 	public:
-		Circle() {}
+		static int Count() { return count; }
 
-		Circle(float radius, std::string name, RgbColor color)
+		Circle() : Circle(1, "noname", RgbColor::BLACK) {}
+
+		Circle(const Circle& other)
+		: Circle(other.radius, other.Name(), other.Color())
+		{}
+
+		Circle(float radius, const std::string& name, RgbColor color)
+		: Shape(name, color)
 		{
+			SetRadius(radius);
+			count++;
 		}
-		float Radius() const { throw NotImplException(); }
-		std::string Name() const { throw NotImplException(); }
-		RgbColor Color() const { throw NotImplException(); }
+		
+		~Circle()
+		{
+			count--;
+		}
+
+		float Radius() const { return radius; }
+		
 		void SetRadius(float radius)
 		{
-			throw NotImplException();
+			if (radius < 0)
+				throw std::invalid_argument("Radius must be > 0");
+			this->radius = radius;
 		}
-		void SetName(std::string name)
+		
+		float Area() const override
 		{
-			throw NotImplException();
+			return (float) (M_PI * Radius() * Radius());
 		}
-		void SetColor(RgbColor color)
+		float Perimeter() const override
 		{
-			throw NotImplException();
+			return (float) (M_PI * Radius() * 2);
 		}
 
-		float Area()
+		Circle operator + (const Circle& c2)
 		{
-			throw NotImplException();
+			auto area = Area() + c2.Area();
+			Circle ret;
+			ret.SetRadius((float)(std::sqrt(area / M_PI)));
+			return ret;
 		}
-		float Perimeter()
+		Circle& operator ++ ()
 		{
-			throw NotImplException();
+			return *this += 1;
+		}
+		void operator ++ (int) {++(*this);}
+		Circle& operator += (float val)
+		{
+			SetRadius((float)(std::sqrt((Area() + val) / M_PI)));
+			return *this;
 		}
 
 	private:
-		std::string name;
-		RgbColor color;
+		static int count;
 		float radius;
 	};
+
+	inline std::ostream& operator << (std::ostream& o, const Circle& c)
+	{
+		o << "a circle " << c.Name() << " with area of " << c.Area();
+		return o;
+	}
 
 }

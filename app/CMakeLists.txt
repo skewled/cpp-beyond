@@ -8,6 +8,9 @@ set(Headers
     include/app/NotImplException.h
     include/app/Rectangle.h
     include/app/RgbColor.h
+    include/app/Templates.h
+    include/app/Shape.h
+    include/app/Measurable.h
 )
 
 set(Sources
@@ -15,6 +18,9 @@ set(Sources
     src/Landscape.cpp
     src/Rectangle.cpp
     src/RgbColor.cpp
+    src/Pointers.cpp
+    src/Shape.cpp
+    src/Measurable.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})

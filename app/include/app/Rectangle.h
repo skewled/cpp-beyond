@@ -1,49 +1,48 @@
 #pragma once
 #include <string>
 #include <app/RgbColor.h>
-#include <app/NotImplException.h>
+#include <app/Shape.h>
 
 namespace training::geometry {
-	class Rectangle
+	class Rectangle : public Shape
 	{
 	public:
-		Rectangle() {}
-		Rectangle(float width, float height, std::string name, RgbColor color)
+		Rectangle() : Rectangle(0, 0, "noname", RgbColor::BLUE) {}
+		Rectangle(float width, float height, const std::string& name, RgbColor color)
+		: Shape(name, color)
 		{
-
+			SetDimension(width, height);
 		}
 
-		float Width() const { throw NotImplException(); }
-		float Height() const { throw NotImplException(); }
-		std::string Name() const { throw NotImplException(); }
-		RgbColor Color() const { throw NotImplException(); }
+		float Width() const { return width; }
+		float Height() const {  return height; }
+
 		void SetDimension(float width, float height)
 		{
-			throw NotImplException();
-		}
-		void SetName(std::string name)
-		{
-			throw NotImplException();
-		}
-		void SetColor(RgbColor color)
-		{
-			throw NotImplException();
+			if (width < 0 || height < 0)
+				throw std::invalid_argument("Dimension should be positive");
+			this->width = width;
+			this->height = height;
 		}
 
-		float Area()
+		float Area() const override
 		{
-			throw NotImplException();
+			return Width() * Height();
 		}
-		float Perimeter()
+		float Perimeter() const override
 		{
-			throw NotImplException();
+			return (Width() + Height())*2;
 		}
 
 	private:
-		std::string name;
-		RgbColor color;
 		float width;
 		float height;
 	};
+
+	inline std::ostream& operator << (std::ostream& out, const Rectangle& r)
+	{
+		out << "A rectangle [" << r.Name() << "] Area: " << r.Area();
+		return out;
+	}
 
 }

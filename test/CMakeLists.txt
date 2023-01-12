@@ -6,6 +6,8 @@ set(Sources
     src/CircleTests.cpp
     src/RectangleTests.cpp
     src/RgbColorTest.cpp
+    src/LandscapeTest.cpp
+    src/TemplateTests.cpp
 )
 
 add_executable(${This} ${Sources})

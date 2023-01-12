@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.18.4)
 # Do we want to build tests
 option(BUILD_TESTING "Test app library features." ON)
 option(BUILD_EXAMPLES "Try example app." OFF)
+option(BUILD_MENU "Try example functional programming app." ON)
 
 # Project will use C/CPP
 project(app C CXX)  # since app is a subproject already - no executable is built for this
@@ -45,6 +46,10 @@ endif()
 # Don't add the goofy "d" postfix for debug builds of libraries.
 if (BUILD_EXAMPLES) 
   add_subdirectory(example)
+endif()
+
+if (BUILD_MENU)
+  add_subdirectory(menu)
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
