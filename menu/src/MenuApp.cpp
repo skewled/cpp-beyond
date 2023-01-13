@@ -7,7 +7,7 @@ using namespace ui;
 class ShowCmd : public Command
 {
 	public:
-		void Selected(MenuItem& mi) override
+		void operator()(MenuItem& mi) override
 	{
 		cout << mi.Title() << " selected" << endl;
 	}
@@ -16,7 +16,7 @@ class ShowCmd : public Command
 class QuitCmd : public Command
 {
 	public:
-		void Selected(MenuItem& mi) override
+		void operator()(MenuItem& mi) override
 	{
 		cout << "Bye" << endl;
 		exit(0);

@@ -13,7 +13,7 @@ namespace ui
 	class Command
 	{
 		public:
-			virtual void Selected(MenuItem& mi) = 0;
+			virtual void operator()(MenuItem& mi) = 0;
 			virtual ~Command() {}
 	};
 
@@ -21,7 +21,7 @@ namespace ui
 	{
 	public:
 		MenuItem(std::string text, Command& cmd) : text(text), cmd(cmd) {}
-		void Select() { cmd.Selected(*this); }
+		void Select() { cmd(*this); }
 		std::string Title() const { return text; }
 	private:
 		std::string text;
