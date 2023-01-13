@@ -5,6 +5,7 @@
 #include <memory>
 #include <initializer_list>
 #include <algorithm>
+#include <functional>
 
 namespace ui
 {
@@ -17,7 +18,7 @@ namespace ui
 			virtual ~Command() {}
 	};
 
-	using CommandFunc = void (*)(MenuItem&);
+	using CommandFunc = std::function<void(MenuItem&)>;
 
 	class MenuItem
 	{

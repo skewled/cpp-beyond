@@ -38,14 +38,16 @@ int main()
 	ShowCmd show;
 	QuitCmd quit;
 
+	bool running = true;
+
 	Menu mainMenu("Main Menu");
 	// note - Menu has an AddItem overload that accepts a 
 	// std::initializer_list.  The compiler will automatically create one
 	// when a list of objects is enclosed in { } 
-	mainMenu.AddItem({MenuItem("Add Shape", ShowFunc),
-					MenuItem("Show Area", ShowFunc),
-					MenuItem("Show Perimeter", ShowFunc),
-					MenuItem("Quit", QuitFunc)});
+	mainMenu.AddItem({MenuItem("Add Shape", show), // Command Pattern CLass
+					MenuItem("Show Area", ShowFunc), // Functor, must be stateless... Adapter Pattern
+					MenuItem("Show Perimeter", [](MenuItem& mi){ cout << "Perimeter" << endl;}), // Lambda execution, access to mainMenu, show, and quit!
+					MenuItem("Quit", [&running](MenuItem&){ running = false;})});
 
 	// alternative is to use a variadic template.  Note no {}
 	//mainMenu.AddItem(MenuItem("Add Shape", show),
@@ -53,7 +55,7 @@ int main()
 	//				MenuItem("Show Perimeter", show),
 	//				MenuItem("Quit", quit));
 
-	while(true) mainMenu.Show();
+	while(running) mainMenu.Show();
     return 0;
 }
 
