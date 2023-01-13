@@ -23,6 +23,16 @@ class QuitCmd : public Command
 	}
 };
 
+void ShowFunc(MenuItem& mi)
+{
+	cout << mi.Title() << " selected" << endl;
+}
+
+void QuitFunc(MenuItem&)
+{
+	exit(0);
+}
+
 int main()
 {
 	ShowCmd show;
@@ -32,10 +42,10 @@ int main()
 	// note - Menu has an AddItem overload that accepts a 
 	// std::initializer_list.  The compiler will automatically create one
 	// when a list of objects is enclosed in { } 
-	mainMenu.AddItem({MenuItem("Add Shape", show),
-					MenuItem("Show Area", show),
-					MenuItem("Show Perimeter", show),
-					MenuItem("Quit", quit)});
+	mainMenu.AddItem({MenuItem("Add Shape", ShowFunc),
+					MenuItem("Show Area", ShowFunc),
+					MenuItem("Show Perimeter", ShowFunc),
+					MenuItem("Quit", QuitFunc)});
 
 	// alternative is to use a variadic template.  Note no {}
 	//mainMenu.AddItem(MenuItem("Add Shape", show),

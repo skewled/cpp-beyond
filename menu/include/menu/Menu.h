@@ -17,16 +17,18 @@ namespace ui
 			virtual ~Command() {}
 	};
 
+	using CommandFunc = void (*)(MenuItem&);
+
 	class MenuItem
 	{
 	public:
-		MenuItem(std::string text, Command& cmd) : text(text), cmd(cmd) {}
+		MenuItem(std::string text, CommandFunc cmd) : text(text), cmd(cmd) {}
 		void Select() { cmd(*this); }
 		std::string Title() const { return text; }
 	private:
 		std::string text;
 		// Store the command object by reference, must initalize it in initializer list in constructor
-		Command& cmd;
+		CommandFunc cmd;
 	};
     typedef std::unique_ptr<MenuItem> MenuItemUp;
 	
